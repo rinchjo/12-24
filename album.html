@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Album</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="wrap w-full h-screen flex justify-center flex-wrap py-6">
+
+    </div>
+
+    <script>
+        const wrap = document.querySelector(".wrap")
+        if (localStorage["userId"]) {
+            userId = JSON.parse(localStorage["userId"]);
+        }
+
+        fetch("https://jsonplaceholder.typicode.com/photos/?albumId=" + userId)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                data.forEach((photos) => {
+                    console.log(photos)
+                    wrap.insertAdjacentHTML("beforeend",
+                        `
+                    <div class=" p-2 cursor-pointer">
+                        <img id="${photos.id}" class="thumbnail" src="${photos.thumbnailUrl}" alt="">
+                    </div>
+                        `)
+                })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+
+        document.addEventListener("click", (e) => {
+            if (e.target.classList.contains("thumbnail")) {
+                console.log(e.target)
+                localStorage.setItem("albumId", e.target.id);
+                location.pathname = '/12-20/photo.html'
+
+            }
+        })
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

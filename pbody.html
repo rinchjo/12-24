@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gray-100">
+  <div class="wrap w-full h-screen bg-white flex justify-center items-center  font-normal text-xl ">
+    <!-- <h2 class="postBody w-3/5 rounded-xl shadow-xl p-24 my-14 mx-auto bg-gray-200 ">${posts.body}quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto</h2> -->
+  </div>
+
+  <script>
+    const wrap = document.querySelector(".wrap");
+    if (localStorage["postId"]) {
+      postId = JSON.parse(localStorage["postId"]);
+    }
+    fetch(
+      "https://jsonplaceholder.typicode.com/posts/?id=" + postId
+
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        data.forEach((posts) => {
+          console.log(posts);
+          wrap.insertAdjacentHTML(
+            "beforeend",
+            `
+            <h2 class="postBody w-3/5 rounded-xl shadow-xl p-24 my-14 mx-auto bg-gray-100 ">
+              <span class="text-2xl font-semibold" >${posts.title}</span><br><br>${posts.body}</h2>
+              `
+          );
+        });
+      }
+      )
+      .catch((err) => console.log(err));
+  </script>
+</body>
+
+</html>
