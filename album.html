@@ -11,6 +11,26 @@
 </head>
 
 <body>
+    <header class="flex w-full h-12 bg-gray-400 justify-evenly items-center">
+
+        <div class="w-1/4 ml-12 font-bold text-3xl p-4">
+            Logo
+        </div>
+        <div class="flex w-3/4">
+            <div id="homeL"
+                class="w-52 flex justify-center p-3 hover:bg-gray-500 hover:text-white transition duration-100 cursor-pointer">
+                Home</div>
+            <div id="todoL"
+                class="w-52 flex justify-center p-3 hover:bg-gray-500 hover:text-white transition duration-100 cursor-pointer">
+                Todo</div>
+            <div id="postL"
+                class="w-52 flex justify-center p-3 hover:bg-gray-500 hover:text-white transition duration-100 cursor-pointer">
+                Post</div>
+            <div id="albumL"
+                class="w-52 flex justify-center p-3 hover:bg-gray-500 hover:text-white transition duration-100 cursor-pointer">
+                Album</div>
+        </div>
+    </header>
     <div class="wrap w-full h-screen flex justify-center flex-wrap py-6">
 
     </div>
@@ -30,7 +50,7 @@
                     console.log(photos)
                     wrap.insertAdjacentHTML("beforeend",
                         `
-                    <div class=" p-2 cursor-pointer">
+                    <div class="p-2 flex cursor-pointer">
                         <img id="${photos.id}" class="thumbnail" src="${photos.thumbnailUrl}" alt="">
                     </div>
                         `)
@@ -40,6 +60,25 @@
                 console.log(err)
             })
 
+        const homeU = document.querySelector("#homeL")
+        const todoU = document.querySelector("#todoL")
+        const postU = document.querySelector("#postL")
+        const albumU = document.querySelector("#albumL")
+
+        homeU.addEventListener("click", () => {
+            location.pathname = "/12-20/user.html"
+        })
+
+        todoU.addEventListener("click", () => {
+            // location.pathname = "/12-20/todo.html"
+        })
+        postU.addEventListener("click", () => {
+            location.pathname = "./12-20/posts.html"
+        })
+        albumU.addEventListener("click", () => {
+            location.pathname = "./12-20/album.html"
+        })
+
         document.addEventListener("click", (e) => {
             if (e.target.classList.contains("thumbnail")) {
                 console.log(e.target)
@@ -48,11 +87,6 @@
 
             }
         })
-
-
-
-
-
 
     </script>
 </body>

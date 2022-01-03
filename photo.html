@@ -2,45 +2,59 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
 <body class="bg-gray-100">
-    <div class="wrap w-full  bg-white flex justify-center items-center ">
+  <div class="wrap w-full bg-white flex justify-center items-center ">
+
+    <div id="logout"
+      class="absolute text-gray-400 left-16 top-4 text-xl cursor-pointer hover:text-green-400 transition duration-300">
+      <i class="fas fa-sign-out-alt"></i>
     </div>
+  </div>
 
-    <script>
-        const wrap = document.querySelector(".wrap");
-        if (localStorage["albumId"]) {
-            albumId = JSON.parse(localStorage["albumId"]);
-        }
-        fetch(
-            "https://jsonplaceholder.typicode.com/photos/?id=" + albumId
+  <script>
+    const wrap = document.querySelector(".wrap");
+    if (localStorage["albumId"]) {
+      albumId = JSON.parse(localStorage["albumId"]);
+    }
+    fetch(
+      "https://jsonplaceholder.typicode.com/photos/?id=" + albumId
 
-        )
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
-                data.forEach((photo) => {
-                    console.log(photo);
-                    wrap.insertAdjacentHTML(
-                        "beforeend",
-                        `
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        data.forEach((photo) => {
+          console.log(photo);
+          wrap.insertAdjacentHTML(
+            "beforeend",
+            `
             <img class="w-3/5 h-screen p-12 rounded-xl shadow-xl mx-auto bg-gray-100" src="${photo.url}">
-              </img>
-              `
-                    );
-                });
-            }
-            )
-            .catch((err) => console.log(err));
-    </script>
+            </img>
+            `
+          );
+        });
+      }
+      )
+      .catch((err) => console.log(err));
+
+    const logout = document.querySelector("#logout")
+    logout.addEventListener("click", () => {
+      location.pathname = "/12-20/album.html"
+    })
+
+  </script>
 </body>
 
 </html>

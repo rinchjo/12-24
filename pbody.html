@@ -7,22 +7,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
-<body class="bg-gray-100">
-  <div class="wrap w-full h-screen bg-white flex justify-center items-center  font-normal text-xl ">
-    <!-- <h2 class="postBody w-3/5 rounded-xl shadow-xl p-24 my-14 mx-auto bg-gray-200 ">${posts.body}quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto</h2> -->
+<body>
+  <div>
+    <div class="wrap w-full bg-white flex flex-col justify-center items-center font-normal text-xl ">
+      <div class="">Comments</div>
+      <!-- <h2 class="postBody w-3/5 rounded-xl shadow-xl p-24 my-14 mx-auto bg-gray-200 ">${posts.body}quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto</h2> -->
+    </div>
+    <div id="logout"
+      class="absolute text-gray-400 left-16 top-4 text-xl cursor-pointer hover:text-green-400 transition duration-300">
+      <i class="fas fa-sign-out-alt"></i>
+    </div>
   </div>
-
   <script>
+
+
     const wrap = document.querySelector(".wrap");
+    const comment = document.querySelector(".comment");
+
     if (localStorage["postId"]) {
       postId = JSON.parse(localStorage["postId"]);
     }
     fetch(
       "https://jsonplaceholder.typicode.com/posts/?id=" + postId
-
     )
       .then((res) => {
         return res.json();
@@ -31,16 +43,40 @@
         data.forEach((posts) => {
           console.log(posts);
           wrap.insertAdjacentHTML(
-            "beforeend",
+            "afterbegin",
             `
-            <h2 class="postBody w-3/5 rounded-xl shadow-xl p-24 my-14 mx-auto bg-gray-100 ">
-              <span class="text-2xl font-semibold" >${posts.title}</span><br><br>${posts.body}</h2>
+            <div class="w-3/5 rounded-xl shadow-xl p-20 my-6 mx-auto bg-gray-200 ">
+              <span class="text-2xl font-semibold" >${posts.title}</span><br><br>${posts.body}</div>
               `
           );
         });
       }
       )
       .catch((err) => console.log(err));
+    fetch("https://jsonplaceholder.typicode.com/comments?postId=" + postId)
+      .then((res) => {
+        return res.json()
+      })
+      .then((data) => {
+        data.forEach((comments) => {
+          console.log(comments)
+
+          wrap.insertAdjacentHTML("afterend",
+            `
+              <div class="postBody w-3/5 rounded-xl shadow-xl p-10 my-6 mx-auto bg-gray-200 ">
+                  <div> User: ${comments.email}</div>
+                  <div class="font-bold" >${comments.name}</div>
+                  <div>${comments.body}</div>
+              </div>
+            `
+          )
+        })
+      })
+    const logout = document.querySelector("#logout")
+    logout.addEventListener("click", () => {
+      location.pathname = "/12-20/posts.html"
+    })
+
   </script>
 </body>
 
